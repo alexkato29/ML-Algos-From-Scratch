@@ -1,0 +1,3 @@
+"""
+Standard Linear Regression.
+"""
