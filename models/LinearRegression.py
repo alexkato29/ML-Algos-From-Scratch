@@ -20,7 +20,7 @@ class LinearRegression(object):
     def set_hyperparamters(self, method="svd", learning_rate=0.01, iterations=1000, epochs=50):
         """
         Change the preexisting model hyperparameters
-        :param method: New method of training. Acceptable values: svd, normal, gradient, stochastic
+        :param method: New method of training. Acceptable values: svd, normal, gradient, stochastic, mini-batch
         :param learning_rate: New learning rate
         :param iterations: New number of training iterations
         :param epochs: New number of training epochs
@@ -48,6 +48,8 @@ class LinearRegression(object):
             self.fit_gradient_descent(X, y)
         elif self.method == "stochastic":
             self.fit_stochastic_gradient_descent(X, y)
+        elif self.method == "mini-batch":
+            self.fit_mini_batch_gradient_descent(X, y)
 
     # See README for derivation of the equation
     def fit_normal(self, X, y):
@@ -77,10 +79,25 @@ class LinearRegression(object):
 
         for epoch in range(self.epochs):
             for i in range(m):
-                random_index = np.random.randint(m)
+                random_index = np.random.randint(m)  # Massively important that this is a random instance!
                 xi = X[random_index:random_index + 1]
                 yi = y[random_index:random_index + 1]
                 gradient = 2 * xi.T.dot(xi.dot(self.theta) - yi)  # NOTE: it is 2 NOT 2/m
+                eta = self.learning_schedule(epoch * m + i)
+                self.theta = self.theta - eta * gradient
+
+    def fit_mini_batch_gradient_descent(self, X, y):
+        m, n = X.shape  # number of instances and features
+
+        if self.theta.shape[0] == 0:  # if theta not yet initialized
+            self.theta = np.random.randn(n, 1)  # Returns a random scalar from the Gaussian Dist.
+
+        for epoch in range(self.epochs):
+            for i in range(m):
+                random_indices = np.random.choice(m, size=int(m * .1), replace=False)
+                X_i = X[random_indices, :]
+                yi = y[random_indices, :]
+                gradient = (2/int(m * .1)) * X_i.T.dot(X_i.dot(self.theta) - yi)  # NOTE: it is 2/int(m * .1)
                 eta = self.learning_schedule(epoch * m + i)
                 self.theta = self.theta - eta * gradient
 
