@@ -8,28 +8,29 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 class LinearRegression(object):
-    def __init__(self, method="svd", learning_rate=0.01, iterations=1000, theta=np.array([])):
+    def __init__(self, theta=np.array([])):
         self.theta = theta
-        self.method = method
-        self.learning_rate = learning_rate
-        self.iterations = iterations
         self.model_name = datetime.now().strftime("%d/%m/%Y-%H:%M")
 
-    def fit(self, X, y):
+    def fit(self, X, y, method="svd", learning_rate=0.01, iterations=1000):
         """
         Fit the Linear Regression
         :param X: Matrix of shape (n_data + 1, n_features) containing the training data.
         :param y: Matrix of shape (n_features, 1) containing the training labels.
+        :param method: String defining what training method should be used.
+        :param learning_rate: Learning rate of the model (when applicable).
+        :param iterations: Number of iterations of learning (when applicable).
+
         :return: The fitted linear regression.
         """
         X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
 
-        if self.method == "svd":
+        if method == "svd":
             self.fit_svd(X, y)
-        elif self.method == "normal":
+        elif method == "normal":
             self.fit_normal(X, y)
-        elif self.method == "gradient-descent":
-            self.fit_gradient_descent(X, y)
+        elif method == "gradient descent":
+            self.fit_gradient_descent(X, y, learning_rate, iterations)
 
     # See README for derivation of the equation
     def fit_normal(self, X, y):
@@ -39,15 +40,15 @@ class LinearRegression(object):
     def fit_svd(self, X, y):
         self.theta = np.linalg.pinv(X).dot(y)
 
-    def fit_gradient_descent(self, X, y):
+    def fit_gradient_descent(self, X, y, learning_rate, iterations):
         m, n = X.shape  # number of instances and features
 
         if self.theta.shape[0] == 0:  # if theta not yet initialized
             self.theta = np.random.randn(n, 1)  # Returns a random scalar from the Gaussian Dist. (mu, sigma)
 
-        for i in range(self.iterations):
+        for i in range(iterations):
             gradients = (2 / m) * X.T.dot(X.dot(self.theta) - y)
-            self.theta = self.theta - self.learning_rate * gradients
+            self.theta = self.theta - learning_rate * gradients
 
     def predict(self, X):
         X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
