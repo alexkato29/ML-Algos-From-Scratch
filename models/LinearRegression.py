@@ -8,7 +8,7 @@ class LinearRegression(object):
     def __init__(self):
         self.theta = np.array([])
 
-    def fit(self, X, y, method="normal"):
+    def fit(self, X, y, method="svd"):
         """
         Fit the Linear Regression
         :param X: Matrix of shape (n_data + 1, n_features) containing the training data.
@@ -16,14 +16,22 @@ class LinearRegression(object):
         :param method: The method by which to fit the regression. Defaults to the normal equation.
         :return: The fitted linear regression.
         """
-        if method == "normal":
+        X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
+
+        if method == "svd":
+            self.fit_svd(X, y)
+        elif method == "normal":
             self.fit_normal(X, y)
 
     # See README for derivation of the equation
     def fit_normal(self, X, y):
         self.theta = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(y)
 
+    def fit_svd(self, X, y):
+        self.theta = np.linalg.pinv(X).dot(y)
+
     def predict(self, X):
+        X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
         return X.dot(self.theta)
 
     def show_model(self):
