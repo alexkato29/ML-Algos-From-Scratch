@@ -1,15 +1,19 @@
 """
 Standard Linear Regression.
 """
+import os
 import numpy as np
+from datetime import datetime
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 class LinearRegression(object):
-    def __init__(self, method="svd", learning_rate=0.01, iterations=1000):
-        self.theta = np.array([])
+    def __init__(self, method="svd", learning_rate=0.01, iterations=1000, theta=np.array([])):
+        self.theta = theta
         self.method = method
         self.learning_rate = learning_rate
         self.iterations = iterations
+        self.model_name = datetime.now().strftime("%d/%m/%Y-%H:%M")
 
     def fit(self, X, y):
         """
@@ -24,7 +28,7 @@ class LinearRegression(object):
             self.fit_svd(X, y)
         elif self.method == "normal":
             self.fit_normal(X, y)
-        elif self.method == "gradient descent":
+        elif self.method == "gradient-descent":
             self.fit_gradient_descent(X, y)
 
     # See README for derivation of the equation
@@ -42,7 +46,7 @@ class LinearRegression(object):
             self.theta = np.random.randn(n, 1)  # Returns a random scalar from the Gaussian Dist. (mu, sigma)
 
         for i in range(self.iterations):
-            gradients = (2/m) * X.T.dot(X.dot(self.theta) - y)
+            gradients = (2 / m) * X.T.dot(X.dot(self.theta) - y)
             self.theta = self.theta - self.learning_rate * gradients
 
     def predict(self, X):
@@ -52,14 +56,46 @@ class LinearRegression(object):
     def show_model(self):
         print(self.theta)
 
-    # TODO: save the model to a file for later use without retraining
-    def save_model(self, model_name):
-        pass
+    def save_model(self):
+        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'w')
+        f.write(str(self) + "\n")
+        f.close()
 
-    # TODO: view all models available for import
-    def view_stored_models(self):
-        pass
+    @staticmethod
+    def view_stored_models():
+        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'r')
+        models = []
+        for line in f:
+            models.append(line)
+        return models
 
-    # TODO: import a model from a save file to avoid retraining
-    def import_model(self, model_name):
-        pass
+    @staticmethod
+    def import_model(model_name):
+        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'r')
+
+        line = f.read()
+
+        while line != model_name:
+            line = f.read()
+
+        f.close()
+        line = line.split(" ")
+
+        theta = np.array([[float(x)] for x in line[4][1:len(line[4]) - 2].split(",")])
+
+        return LinearRegression(line[1], int(line[2]), int(line[3]), theta)
+
+    def __str__(self):
+        to_return = str.format("%s %s %d %d" % (self.model_name,
+                                                self.method,
+                                                self.learning_rate,
+                                                self.iterations))
+        to_return += " ["
+
+        for weight in self.theta:
+            to_return += str(weight[0]) + ","
+
+        to_return = to_return[:len(to_return) - 2] + "]"
+
+        return to_return
+
