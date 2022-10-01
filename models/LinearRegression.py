@@ -88,16 +88,17 @@ class LinearRegression(object):
 
     def fit_mini_batch_gradient_descent(self, X, y):
         m, n = X.shape  # number of instances and features
+        batch_size = 32
 
         if self.theta.shape[0] == 0:  # if theta not yet initialized
             self.theta = np.random.randn(n, 1)  # Returns a random scalar from the Gaussian Dist.
 
         for epoch in range(self.epochs):
             for i in range(m):
-                random_indices = np.random.choice(m, size=int(m * .1), replace=False)
+                random_indices = np.random.choice(m, size=batch_size, replace=False)
                 X_i = X[random_indices, :]
                 yi = y[random_indices, :]
-                gradient = (2/int(m * .1)) * X_i.T.dot(X_i.dot(self.theta) - yi)  # NOTE: it is 2/int(m * .1)
+                gradient = (2/batch_size) * X_i.T.dot(X_i.dot(self.theta) - yi)  # NOTE: it is 2/batch_size
                 eta = self.learning_schedule(epoch * m + i)
                 self.theta = self.theta - eta * gradient
 
