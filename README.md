@@ -4,5 +4,6 @@ I did so to gain a deep understanding of the math and code behind them.
 ### Preprocessing
 ### Models
 ##### Linear Regression
-The current implementation supports finding the model via the normal equation.
+Current model implementation supports three types of training: 
+singular value decomposition (default), gradient descent, and the normal equation.
 ### Analysis
