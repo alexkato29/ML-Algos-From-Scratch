@@ -5,6 +5,7 @@ I am working to add new models, training options, and features.
 ### Preprocessing
 ### Models
 ##### Linear Regression
-Current model implementation supports three types of training: 
-singular value decomposition (default), gradient descent, and the normal equation.
+Current model implementation supports multiple types of training: 
+singular value decomposition (default), normal equation, gradient descents
+(batch, mini-batch, and stochastic).
 ### Model Analysis
