@@ -15,7 +15,7 @@ so that the residual values are minimized.
 
 The dot product is analogous to the transposed matrix product.
 
-![equation](https://latex.codecogs.com/gif.image?%5Cdpi%7B110%7DMSE%20=%20%5Cfrac%7B1%7D%7Bm%7D%5Csum_%7Bi=1%7D%5E%7Bm%7D(%5Ctheta%5E%5Ctop%20x_i%20-%20\bold{y}_i)%5E2) 
+![equation](https://latex.codecogs.com/svg.image?%5Cdpi%7B110%7DMSE%20=%20%5Cfrac%7B1%7D%7Bm%7D%5Csum_%7Bi=1%7D%5E%7Bm%7D(%5Ctheta%5E%5Ctop%20x_i%20-%20\bold{y}_i)%5E2) 
 
 The sum of all elements in X by definition of matrix vector multiplication
 
