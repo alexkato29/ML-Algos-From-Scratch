@@ -42,15 +42,3 @@ To minimize the function, we want to look for the point where the partial is zer
 And thus, we have found our normal equation. Note it was not necessary to compute the second derivative. By nature of 
 the MSE function, there is no local or global maximum. Our error can always increase by making the model fit the data 
 arbitrarily worse. The only extrema is the global minimum that minimizes error.
-
-## Deriving the Gradients of MSE
-Recall from the derivation of the normal equation that
-
-![equation](https://latex.codecogs.com/svg.image?%5Cfrac%7B%5Cpartial%20MSE%7D%7B%5Cpartial%20%5Ctheta%7D%20=%20%5Cfrac%7B2%7D%7Bm%7D%20X%5E%5Ctop(X%5Ctheta%20-%20%5Cbold%7By%7D))
-
-Because $ \theta $ is a vector of weights, this derivative represents 
-a new vector where each component *i* is ![equation](https://latex.codecogs.com/svg.image?%5Cpartial%20MSE/%5Cpartial%20%5Ctheta_i).
-
-Thus, by definition,
-
-![equation](https://latex.codecogs.com/svg.image?%5Cbigtriangledown_%5Ctheta%20MSE=%5Cfrac%7B2%7D%7Bm%7DX%5E%5Ctop(X%5Ctheta%20-%20%5Cbold%7By%7D))

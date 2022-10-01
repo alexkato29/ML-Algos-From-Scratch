@@ -40,6 +40,7 @@ class LinearRegression(object):
     def fit_svd(self, X, y):
         self.theta = np.linalg.pinv(X).dot(y)
 
+    # See gradient descent derivation
     def fit_gradient_descent(self, X, y, learning_rate, iterations):
         m, n = X.shape  # number of instances and features
 
