@@ -81,21 +81,15 @@ class LinearRegression(object):
         f.close()
         line = line.split(" ")
 
-        theta = np.array([[float(x)] for x in line[4][1:len(line[4]) - 2].split(",")])
+        theta = np.array([[float(x)] for x in line[1][1:len(line[1]) - 2].split(",")])
 
-        return LinearRegression(line[1], int(line[2]), int(line[3]), theta)
+        return LinearRegression(theta=theta)
 
     def __str__(self):
-        to_return = str.format("%s %s %d %d" % (self.model_name,
-                                                self.method,
-                                                self.learning_rate,
-                                                self.iterations))
-        to_return += " ["
+        to_return = self.model_name + " ["
 
         for weight in self.theta:
             to_return += str(weight[0]) + ","
 
-        to_return = to_return[:len(to_return) - 2] + "]"
-
-        return to_return
+        return to_return[:len(to_return) - 2] + "]"
 
