@@ -3,6 +3,14 @@ This project features my custom-built implementations of common data preprocessi
 I did so to gain a deep understanding of the math and code behind them. ***This project is a work in progress***!
 I am working to add new models, training options, and features.
 ### Preprocessing
+##### Train/Test Split
+Splits a dataframe into training and testing data.
+##### Imputer
+Replaces missing data entries with the median of a column. Also can 
+delete missing instances or features altogether.
+##### Feature Scaling
+Scales a column of features using min-max scale or standardization.
+Standardization is not bound while min-max is always between 0 and 1.
 ### Models
 ##### Linear Regression
 Current model implementation supports multiple types of training: 
