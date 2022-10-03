@@ -114,13 +114,13 @@ class LinearRegression(object):
         print(self.theta)
 
     def save_model(self):
-        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'w')
+        f = open(dir_path + "/saved_models/LinearRegressions.txt", 'w')
         f.write(str(self) + "\n")
         f.close()
 
     @staticmethod
     def view_stored_models():
-        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'r')
+        f = open(dir_path + "/saved_models/LinearRegressions.txt", 'r')
         models = []
         for line in f:
             models.append(line)
@@ -128,7 +128,7 @@ class LinearRegression(object):
 
     @staticmethod
     def import_model(model_name):
-        f = open(dir_path + "/../saved_models/LinearRegressions.txt", 'r')
+        f = open(dir_path + "/saved_models/LinearRegressions.txt", 'r')
 
         line = f.read()
 
