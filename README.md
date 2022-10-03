@@ -16,4 +16,8 @@ Standardization is not bound while min-max is always between 0 and 1.
 Current model implementation supports multiple types of training: 
 singular value decomposition (default), normal equation, gradient descents
 (batch, mini-batch, and stochastic).
+##### Ridge Regression
+Implementation of ridge regression to achieve regularization. Supports
+training using stochastic gradient descent. Make sure to scale data before
+training.
 ### Model Analysis

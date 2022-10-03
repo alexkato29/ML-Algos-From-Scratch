@@ -38,16 +38,22 @@ class RidgeRegression(Regression):
         """
         X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
 
-        self.fit_gradient_descent(X, y)
+        self.fit_stochastic_gradient_descent(X, y)
 
     # Same as gradient descent, except use only one instance in the data rather than all the data
     # Note it is IMPERATIVE you scale data before fitting ridge regressions
-    def fit_gradient_descent(self, X, y):
+    def fit_stochastic_gradient_descent(self, X, y):
         m, n = X.shape  # number of instances and features
 
         if self.theta.shape[0] == 0:  # if theta not yet initialized
             self.theta = np.random.randn(n, 1)  # Returns a random scalar from the Gaussian Dist.
 
-        for i in range(self.iterations):
-            gradients = (2 / m) * X.T.dot(X.dot(self.theta) - y) + self.alpha * self.theta[1:]
-            self.theta = self.theta - self.learning_rate * gradients
+        for epoch in range(self.epochs):
+            for i in range(m):
+                random_index = np.random.randint(m)  # Massively important that this is a random instance!
+                xi = X[random_index:random_index + 1]
+                yi = y[random_index:random_index + 1]
+                # The difference is, in the gradient, we are adding alpha*theta to punish the weights
+                gradient = 2 * xi.T.dot(xi.dot(self.theta) - yi) + self.alpha * self.theta[1:]
+                eta = self.learning_schedule(epoch * m + i)
+                self.theta = self.theta - eta * gradient
