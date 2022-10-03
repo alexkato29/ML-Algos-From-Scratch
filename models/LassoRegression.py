@@ -53,5 +53,5 @@ class LassoRegression(Regression):
                 yi = y[random_index:random_index + 1]
                 # The difference is, in the gradient, we are adding alpha*sign(theta)
                 gradient = 2 * xi.T.dot(xi.dot(self.theta) - yi) + self.alpha * np.sign(self.theta[1:])
-                eta = self.learning_schedule(epoch * m + i)
+                eta = self.learning_schedule(epoch * m + i) / (epoch + 1)
                 self.theta = self.theta - eta * gradient
