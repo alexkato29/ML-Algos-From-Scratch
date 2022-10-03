@@ -20,4 +20,7 @@ singular value decomposition (default), normal equation, gradient descents
 Implementation of ridge regression to achieve regularization. Supports
 training using stochastic gradient descent. Make sure to scale data before
 training.
+##### Lasso Regression
+Implementation of Lasso Regression. Trains using stochastic gd. Good for
+removing weights of relatively unimportant features.
 ### Model Analysis
