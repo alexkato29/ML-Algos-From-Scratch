@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def train_test_split(data, test_size=0.2, random_seed=256):
+def train_test_split_by_id(data, test_size=0.2, random_seed=256):
     """
     Split the data into separate training and test data.
     :param data: Pandas dataframe to be split.
@@ -22,26 +22,33 @@ def impute_feature(df, feature, strategy="median"):
     Impute a dataframe to handle missing entries
     :param df: Pandas dataframe to impute.
     :param feature: String of feature name to impute.
-    :param strategy: String of the strategy by which to impute. Options are: median, r-instances, r-feature.
+    :param strategy: String of the strategy by which to impute. Options are: median, remove-instances, remove-feature.
     """
     if strategy == "median":
-        median = df[feature].median()
+        median = np.median(df[feature])
         df[feature].fillna(median, inplace=True)
-    elif strategy == "r-instances":
+    elif strategy == "remove-instances":
         df.dropna(subset=[feature])
-    elif strategy == "r-feature":
+    elif strategy == "remove-feature":
         df.drop(feature, axis=1)
 
 
 def scale_feature(df, feature, method="standardization"):
+    """
+    Scale a feature using a specified method
+    :param df: Pandas Dataframe
+    :param feature: The feature to be scaled
+    :param method: The method by which to scale. Options: min-max, standardization (default)
+    :return: Updated dataframe with the scaled feature
+    """
     if method == "min-max":
         min_val = np.min(df[feature])
         max_val = np.max(df[feature])
         df[feature] = (df[feature] - min_val) / (max_val - min_val)
 
     else:
-        avg_val = np.mean(df[feature])
+        mean = np.mean(df[feature])
         std = np.std(df[feature])
-        df[feature] = (df[feature] - avg_val) / std
+        df[feature] = (df[feature] - mean) / std
 
     return df
