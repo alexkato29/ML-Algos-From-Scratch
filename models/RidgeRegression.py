@@ -33,8 +33,6 @@ class RidgeRegression(Regression):
         Fit the Ridge Regression
         :param X: Matrix of shape (n_data + 1, n_features) containing the training data.
         :param y: Matrix of shape (n_features, 1) containing the training labels.
-
-        :return: The fitted ridge regression.
         """
         X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
 
