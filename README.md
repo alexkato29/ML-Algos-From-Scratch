@@ -24,3 +24,5 @@ training.
 Implementation of Lasso Regression. Trains using stochastic gd. Good for
 removing weights of relatively unimportant features.
 ### Model Analysis
+##### MSE
+Returns the MSE of the model's residuals.
