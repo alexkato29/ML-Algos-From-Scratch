@@ -42,6 +42,20 @@ class LogisticRegression(Regression):
                 random_index = np.random.randint(m)  # Massively important that this is a random instance!
                 xi = X[random_index:random_index + 1]
                 yi = y[random_index:random_index + 1]
-                gradient = 2 * xi.T.dot(xi.dot(self.theta) - yi)  # NOTE: it is 2 NOT 2/m
+                h_x = np.vectorize(self.sigmoid)
+                gradient = xi.T.dot(h_x(xi.dot(self.theta)) - yi)
                 eta = self.learning_schedule(epoch * m + i)
                 self.theta = self.theta - eta * gradient
+
+    def predict(self, X):
+        X = np.c_[np.ones((X.shape[0], 1)), X]  # add x0 = 1 to each instance. This is to account for theta_0
+        t = X.dot(self.theta)
+        h_x = np.vectorize(self.decision)
+        return h_x(t)
+
+    def decision(self, t):
+        return 1 if self.sigmoid(t) >= 0.5 else 0
+
+    def sigmoid(self, t):
+        return 1/(1 + np.exp(-t))
+
