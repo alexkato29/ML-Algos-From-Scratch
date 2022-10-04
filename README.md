@@ -13,8 +13,7 @@ Scales a column of features using min-max scale or standardization.
 Standardization is not bound while min-max is always between 0 and 1.
 ### Models
 ##### Logistic Regression
-Work in progress. Supports stochastic gd training of logistic regression 
-classifiers.
+Logistic regression classifier supporting stochastic gd training.
 ##### Linear Regression
 Current model implementation supports multiple types of training: 
 singular value decomposition (default), normal equation, gradient descents
